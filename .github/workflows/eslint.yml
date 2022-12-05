@@ -9,7 +9,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: v18.0.0
       - run: npm ci
       - name: install
         run: make install
