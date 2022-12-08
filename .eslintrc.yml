@@ -6,4 +6,8 @@ overrides: []
 parserOptions:
   ecmaVersion: latest
   sourceType: module
-rules: {}
+ignorePatterns: ["bundle.js"]
+rules:
+  no-console: 0
+  import/extensions: 0
+  quotes: [2, "single"]
