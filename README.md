@@ -3,9 +3,9 @@
 [![ESlint](https://github.com/SonnyOnni/frontend-project-11/actions/workflows/eslint.yml/badge.svg)](https://github.com/SonnyOnni/frontend-project-11/actions)
 
 #Vercel link to the project
-```
+
 https://frontend-project-11-sigma.vercel.app/
-```
+
 
 This project has been created using **webpack-cli**, you can now run
 
