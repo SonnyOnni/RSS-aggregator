@@ -1,3 +1,17 @@
 body {
     background-color: blueviolet;
 }
+
+.container {
+    padding-top: 100px;
+}
+
+#rss-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.input-form {
+    margin-bottom: 20px;
+}
