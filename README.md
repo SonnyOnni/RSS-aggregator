@@ -4,7 +4,7 @@
 
 #Vercel link to the project
 ```
-[npm run build](https://frontend-project-11-sigma.vercel.app/)
+https://frontend-project-11-sigma.vercel.app/
 ```
 
 This project has been created using **webpack-cli**, you can now run
