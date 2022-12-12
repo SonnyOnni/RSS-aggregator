@@ -44,6 +44,8 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
     "common-js": "^0.3.8",
-    "common.js": "^1.1.1"
+    "common.js": "^1.1.1",
+    "on-change": "^4.0.2",
+    "yup": "^0.32.11"
   }
 }
