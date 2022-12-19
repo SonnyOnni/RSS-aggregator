@@ -1,35 +1,35 @@
+/* eslint-disable quotes */
 import '../style.css';
 import 'bootstrap';
 import * as yup from 'yup';
 import onChange from 'on-change';
 import i18next from 'i18next';
+import ru from './lng/ru.js';
+import en from './lng/en.js';
 import view from './view';
 
 i18next.init({
   lng: 'ru',
-  resourses: {
-    ru: {
-      translation: {
-        header: 'RSS агрегатор',
-        paragraph: {
-          afterHeader: 'Начните читать RSS сегодня! Это легко, это красиво.',
-          example: 'Пример: https://ru.hexlet.io/lessons.rss',
-        },
-        form: {
-          input: 'Ссылка RSS',
-          btn: 'Добавить',
-        },
-        feedback: {
-          valid: 'RSS успешно загружен',
-          loaded: 'RSS уже существует',
-          invalid: 'Ссылка должна быть валидным URL',
-        },
-      },
-    },
+  resources: {
+    ru,
+    en,
   },
 });
 
-console.log(i18next.t('header'));
+/* connection TextContent and i18next for ru-en traslation */
+const header = document.querySelector('h1');
+header.textContent = i18next.t('header', { lng: 'ru' });
+const pAfterHeader = document.querySelector('.lead');
+pAfterHeader.textContent = i18next.t('paragraph.afterHeader', { lng: 'ru' });
+const pExample = document.querySelector('.example');
+pExample.textContent = i18next.t('paragraph.example', { lng: 'ru' });
+const label = document.querySelector('label');
+label.textContent = i18next.t('form.input', { lng: 'ru' });
+const btn = document.querySelector('button');
+btn.textContent = i18next.t('form.btn', { lng: 'ru' });
+
+/* work with form */
+const form = document.querySelector('form');
 
 const schema = yup.string()
   .matches(
@@ -40,38 +40,35 @@ const state = {
   currentUrl: '',
   urls: [],
   isValid: {
-    result: 'valid',
+    result: '',
     feedback: '',
   },
 };
 
-const input = document.querySelector('input');
-
 const watchedState = onChange(state, (path, value) => {
-  schema
-    .isValid(value)
+  schema.isValid(value)
     .then((valid) => {
-      console.log(valid);
       if (valid === true && !state.urls.includes(value)) {
-        console.log(state.isValid.feedback);
         state.urls.push(value);
         state.isValid.result = 'valid';
-        state.isValid.feedback = i18next.t('feedback.valid');
+        state.isValid.feedback = i18next.t('feedback.valid', { lng: 'ru' });
       } else if (state.urls.includes(value)) {
-        console.log(state.isValid.feedback);
         state.isValid.result = 'loaded';
-        state.isValid.feedback = i18next.t('feedback.loaded');
+        state.isValid.feedback = i18next.t('feedback.loaded', { lng: 'ru' });
       } else {
-        console.log(state.isValid.feedback);
         state.isValid.result = 'invalid';
-        state.isValid.feedback = i18next.t('feedback.invalid');
+        state.isValid.feedback = i18next.t('feedback.invalid', { lng: 'ru' });
       }
 
       view(state);
     });
 });
 
-input.addEventListener('change', (e) => {
-  state.currentUrl = e.target.value;
-  watchedState.value = e.target.value;
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+
+  state.currentUrl = formData.get('url');
+  watchedState.value = formData.get('url');
 });
