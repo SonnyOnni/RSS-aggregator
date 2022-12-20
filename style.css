@@ -1,3 +1,7 @@
+.bg-custom {
+    background: url('src/img/Sanrio-Wallpaper-Hd-12-2048x1280.jpg') no-repeat center;
+}
+
 .red-border {
     border: 2px solid red;
 }
