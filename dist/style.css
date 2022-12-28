@@ -1,5 +1,5 @@
 .bg-custom {
-    background: url(86291e1e69e5ff0784f7.jpg) no-repeat center;
+    background: linear-gradient(to bottom, rgba(235,183,202,1) 0%, rgba(235,183,202,1) 44%, rgba(255,255,255,1) 100%);
 }
 
 .red-border {

@@ -7,6 +7,7 @@ import i18next from 'i18next';
 import ru from './lng/ru.js';
 import en from './lng/en.js';
 import view from './view';
+import newView from './newView';
 
 i18next.init({
   lng: 'ru',
@@ -94,8 +95,7 @@ const parseRSS = (url) => {
         });
       });
 
-      console.log(state.feeds);
-      console.log(state.posts);
+      newView(state.feeds, state.posts);
     });
 
   /* axios.get(`${url}`)
