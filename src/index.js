@@ -1,141 +1,171 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable quotes */
 import '../style.css';
 import 'bootstrap';
 import * as yup from 'yup';
-import onChange from 'on-change';
+import axios from 'axios';
 import i18next from 'i18next';
 import ru from './lng/ru.js';
 import en from './lng/en.js';
+import parseRSS from './parser';
+import updatePosts from './updater';
 import view from './view';
-import newView from './newView';
 
-i18next.init({
-  lng: 'ru',
+const defaultLanguage = 'ru';
+
+const i18nextInstance = i18next.createInstance();
+i18nextInstance.init({
+  lng: defaultLanguage,
+  debug: false,
   resources: {
     ru,
     en,
   },
 });
 
-/* connection TextContent and i18next for ru-en traslation */
-
-const header = document.querySelector('h1');
-header.textContent = i18next.t('header', { lng: 'ru' });
-const pAfterHeader = document.querySelector('.lead');
-pAfterHeader.textContent = i18next.t('paragraph.afterHeader', { lng: 'ru' });
-const pExample = document.querySelector('.example');
-pExample.textContent = i18next.t('paragraph.example', { lng: 'ru' });
-const label = document.querySelector('label');
-label.textContent = i18next.t('form.input', { lng: 'ru' });
-const btn = document.querySelector('button');
-btn.textContent = i18next.t('form.btn', { lng: 'ru' });
-
-/* validation */
-
-const schema = yup.string()
-  .matches(
-    /((https|http):\/\/)?rss$/,
-  ).required();
-
-/* state */
-
-const state = {
-  currentUrl: '',
-  isValid: {
-    result: '',
-    feedback: '',
+yup.setLocale({
+  mixed: {
+    notOneOf: 'feedback.errors.loaded',
   },
-  urls: [],
-  feeds: [],
-  posts: [],
-};
-
-/* RSS parse */
-
-const getRandomID = (max) => Math.floor(Math.random() * max);
-
-const parseRSS = (url) => {
-  const parser = new DOMParser();
-
-  fetch(`https://allorigins.hexlet.app/get?url=${encodeURIComponent(`${url}`)}`)
-    .then((response) => {
-      if (response.ok) return response.json();
-      throw new Error('Network response was not ok.');
-    })
-    .then((data) => {
-      const htmlString = data.contents;
-      const createFeedId = getRandomID(1000);
-      const doc = parser.parseFromString(htmlString, "application/xml");
-      const feedTitleEl = doc.querySelector('channel title');
-      const feedTitle = feedTitleEl.textContent;
-      const feedDescEl = doc.querySelector('channel description');
-      const feedDesc = feedDescEl.textContent;
-
-      state.feeds.push({ feedID: createFeedId, feedTitle: `${feedTitle}`, feedDesc: `${feedDesc}` });
-
-      const items = doc.querySelectorAll('item');
-
-      items.forEach((item) => {
-        const postTitleEl = item.querySelector('title');
-        const postTitle = postTitleEl.textContent;
-        const postDescEl = item.querySelector('description');
-
-        let postDesc;
-        if (postDescEl === null) {
-          postDesc = '';
-        } else {
-          postDesc = postDescEl.textContent;
-        }
-
-        const postLinkEl = item.querySelector('link');
-        const postLink = postLinkEl.textContent;
-
-        state.posts.push({
-          feedId: createFeedId, postTitle: `${postTitle}`, postDesc: `${postDesc}`, postLink: `${postLink}`, postID: getRandomID(1000),
-        });
-      });
-
-      newView(state.feeds, state.posts);
-    });
-
-  /* axios.get(`${url}`)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((e) => {
-      console.log(e);
-      throw (e);
-    }); */
-};
-
-const watchedState = onChange(state, (path, value) => {
-  schema.isValid(value)
-    .then((valid) => {
-      if (valid === true && !state.urls.includes(value)) {
-        state.urls.push(value);
-        state.isValid.result = 'valid';
-        state.isValid.feedback = i18next.t('feedback.valid', { lng: 'ru' });
-
-        parseRSS(value);
-      } else if (state.urls.includes(value)) {
-        state.isValid.result = 'loaded';
-        state.isValid.feedback = i18next.t('feedback.loaded', { lng: 'ru' });
-      } else {
-        state.isValid.result = 'invalid';
-        state.isValid.feedback = i18next.t('feedback.invalid', { lng: 'ru' });
-      }
-
-      view(state);
-    });
+  string: {
+    required: 'feedback.errors.empty_field',
+    url: 'feedback.errors.invalid',
+  },
 });
 
+/* Connection textContent and i18next for ru-en traslation */
+const header = document.querySelector('h1');
+header.textContent = i18nextInstance.t('header', { lng: `${defaultLanguage}` });
+const pAfterHeader = document.querySelector('.lead');
+pAfterHeader.textContent = i18nextInstance.t('paragraph.afterHeader', { lng: `${defaultLanguage}` });
+const pExample = document.querySelector('.example');
+pExample.textContent = i18nextInstance.t('paragraph.example', { lng: `${defaultLanguage}` });
+const label = document.querySelector('label');
+label.textContent = i18nextInstance.t('form.input', { lng: `${defaultLanguage}` });
+const btn = document.querySelector('.btn-submit');
+btn.textContent = i18nextInstance.t('form.btn', { lng: `${defaultLanguage}` });
+
+/* Validation & proxy */
+const getYupSchema = (urls) => yup.string().required().url().notOneOf(urls);
+
+const createProxy = (link) => `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
+
+const generatorId = () => {
+  let currentId = 0;
+
+  return () => {
+    currentId += 1;
+    const newId = currentId;
+    return newId;
+  };
+};
+
+const getId = generatorId();
+
+/* State */
+const state = {
+  processState: 'initialized',
+  rssForm: {
+    processState: 'filling',
+    currentUrl: null,
+  },
+  uiState: {
+    readPostsId: [],
+    feedback: null,
+  },
+  urls: [],
+  data: {
+    feeds: [],
+    posts: [],
+  },
+};
+
+/* RSS form */
 const form = document.querySelector('form');
+const input = document.querySelector('input');
+
+const watchedState = view(state, i18nextInstance);
+
+input.addEventListener('change', (e) => {
+  watchedState.rssForm.currentUrl = e.target.value;
+});
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const formData = new FormData(e.target);
+  watchedState.rssForm.processState = 'validating';
+  const schema = getYupSchema(watchedState.urls);
+  let proxyUrl;
 
-  state.currentUrl = formData.get('url');
-  watchedState.value = formData.get('url');
+  schema.validate(watchedState.rssForm.currentUrl)
+    .then((link) => {
+      watchedState.rssForm.processState = 'valid';
+      watchedState.processState = 'loading';
+      proxyUrl = createProxy(link);
+      return axios.get(proxyUrl);
+    })
+    .then((response) => response.data.contents)
+    .then((content) => {
+      const parsedContent = parseRSS(content);
+      const { currentFeed, currentPosts } = parsedContent;
+
+      if (!currentFeed || !currentPosts) {
+        throw new Error('Parser Error');
+      }
+
+      currentFeed.id = getId();
+      currentPosts.forEach((post) => {
+        post.feedId = currentFeed.id;
+        post.id = getId();
+      });
+
+      watchedState.data.feeds.push(currentFeed);
+      watchedState.data.posts.push(...currentPosts);
+      watchedState.urls.push(watchedState.rssForm.currentUrl);
+
+      watchedState.processState = 'loadedSuccess';
+      watchedState.uiState.feedback = 'feedback.valid';
+      watchedState.rssForm.processState = 'filling';
+      return currentFeed.id;
+    })
+    .then((feedId) => {
+      watchedState.processState = 'updating';
+      return setTimeout(() => updatePosts(watchedState, proxyUrl, feedId, getId), 5000);
+    })
+    .catch((err) => {
+      switch (err.name) {
+        case 'ValidationError': {
+          const [errorCode] = err.errors;
+          watchedState.rssForm.processState = 'invalid';
+          watchedState.uiState.feedback = errorCode;
+          break;
+        }
+
+        case 'AxiosError':
+          if (err.message === 'Network Error') {
+            watchedState.processState = 'networkErr';
+            watchedState.uiState.feedback = 'feedback.errors.network';
+          }
+          break;
+
+        case 'Error':
+          if (err.message === 'Parser Error') {
+            watchedState.processState = 'parserErr';
+            watchedState.uiState.feedback = 'feedback.errors.parser';
+          }
+          break;
+
+        case 'Type Error':
+          if (err.message === 'Type Error') {
+            watchedState.processState = 'typeErr';
+            watchedState.uiState.feedback = 'feedback.errors.type';
+          }
+          break;
+
+        default:
+          throw new Error(`Unknown error ${err}`);
+      }
+
+      console.error(err);
+    });
 });

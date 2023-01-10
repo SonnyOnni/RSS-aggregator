@@ -11,8 +11,14 @@ export default {
     },
     feedback: {
       valid: 'RSS успешно загружен',
-      loaded: 'RSS уже существует',
-      invalid: 'Ссылка должна быть валидным URL',
+      errors: {
+        empty_field: 'Не должно быть пустым',
+        invalid: 'Ссылка должна быть валидным URL',
+        loaded: 'RSS уже существует',
+        network: 'Ошибка сети',
+        parser: 'Ресурс не содержит валидный RSS',
+        type: 'Неподдерживаемый тип RSS',
+      },
     },
   },
 };

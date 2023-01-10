@@ -11,8 +11,13 @@ export default {
     },
     feedback: {
       valid: 'RSS uploaded successfully',
-      loaded: 'RSS already exists',
-      invalid: 'The link must be a valid URL',
+      errors: {
+        empty_field: 'Should not be empty',
+        invalid: 'The link must be a valid URL',
+        loaded: 'RSS already exists',
+        network: 'Network error',
+        parser: 'The resource does not contain valid RSS',
+      },
     },
   },
 };
