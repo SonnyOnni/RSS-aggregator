@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable import/no-extraneous-dependencies */
 // @ts-check
 const { devices } = require('@playwright/test');
 
@@ -6,7 +8,6 @@ const { devices } = require('@playwright/test');
  * https://github.com/motdotla/dotenv
  */
 // require('dotenv').config();
-
 
 /**
  * @see https://playwright.dev/docs/test-configuration
