@@ -12,12 +12,11 @@ export default {
     feedback: {
       valid: 'RSS успешно загружен',
       errors: {
-        empty_field: 'Не должно быть пустым',
         invalid: 'Ссылка должна быть валидным URL',
         loaded: 'RSS уже существует',
+        empty_field: 'Не должно быть пустым',
         network: 'Ошибка сети',
         parser: 'Ресурс не содержит валидный RSS',
-        type: 'Неподдерживаемый тип RSS',
       },
     },
   },

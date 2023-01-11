@@ -155,13 +155,6 @@ form.addEventListener('submit', (e) => {
           }
           break;
 
-        case 'Type Error':
-          if (err.message === 'Type Error') {
-            watchedState.processState = 'typeErr';
-            watchedState.uiState.feedback = 'feedback.errors.type';
-          }
-          break;
-
         default:
           throw new Error(`Unknown error ${err}`);
       }

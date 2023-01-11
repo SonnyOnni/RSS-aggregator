@@ -12,9 +12,9 @@ export default {
     feedback: {
       valid: 'RSS uploaded successfully',
       errors: {
-        empty_field: 'Should not be empty',
         invalid: 'The link must be a valid URL',
         loaded: 'RSS already exists',
+        empty_field: 'Should not be empty',
         network: 'Network error',
         parser: 'The resource does not contain valid RSS',
       },
