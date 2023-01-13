@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable quotes */
-import '../style.css';
+import './style.css';
 import 'bootstrap';
 import * as yup from 'yup';
 import axios from 'axios';
