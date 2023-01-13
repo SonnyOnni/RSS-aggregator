@@ -145,7 +145,7 @@ const renderFeeds = (elements, values) => {
   feeds.append(feedsContainer);
 };
 
-const renderPosts = (elements, values, i18nInstance, watchedState) => {
+const renderPosts = (elements, values) => {
   const { posts } = elements;
 
   const postsContainer = document.createElement('div');
@@ -164,11 +164,6 @@ const renderPosts = (elements, values, i18nInstance, watchedState) => {
   values.forEach((post) => {
     const li = document.createElement('li');
     li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
-
-    li.addEventListener('click', (e) => {
-      const { id } = e.target.dataset;
-      watchedState.uiState.readPostsId.push(id);
-    });
 
     const a = document.createElement('a');
     a.classList.add('fw-bold');
@@ -239,7 +234,7 @@ const view = (state, i18nInstance) => {
         break;
 
       case 'data.posts':
-        renderPosts(htmlElements, value, i18nInstance, watchedState);
+        renderPosts(htmlElements, value);
         checkLinkStatus(watchedState.uiState.readPostsId);
         break;
 
