@@ -8,6 +8,6 @@ parserOptions:
   sourceType: module
 ignorePatterns: ["bundle.js"]
 rules:
-  no-console: 0
   import/extensions: 0
   quotes: [2, "single"]
+  no-param-reassign: 0

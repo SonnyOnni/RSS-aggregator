@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable quotes */
 import './style.css';
 import 'bootstrap';
 import * as yup from 'yup';
@@ -34,19 +32,22 @@ export default () => {
     },
   });
 
-  /* Connection textContent and i18next for ru-en traslation */
-  const header = document.querySelector('h1');
-  header.textContent = i18nextInstance.t('header', { lng: `${defaultLanguage}` });
-  const pAfterHeader = document.querySelector('.lead');
-  pAfterHeader.textContent = i18nextInstance.t('paragraph.afterHeader', { lng: `${defaultLanguage}` });
-  const pExample = document.querySelector('.example');
-  pExample.textContent = i18nextInstance.t('paragraph.example', { lng: `${defaultLanguage}` });
-  const label = document.querySelector('label');
-  label.textContent = i18nextInstance.t('form.input', { lng: `${defaultLanguage}` });
-  const btn = document.querySelector('.btn-submit');
-  btn.textContent = i18nextInstance.t('form.btn', { lng: `${defaultLanguage}` });
+  const elements = {
+    header: document.querySelector('h1'),
+    pAfterHeader: document.querySelector('.lead'),
+    pExample: document.querySelector('.example'),
+    label: document.querySelector('label'),
+    btn: document.querySelector('.btn-submit'),
+    form: document.querySelector('form'),
+    input: document.querySelector('input'),
+  };
 
-  /* Validation & proxy */
+  elements.header.textContent = i18nextInstance.t('header', { lng: `${defaultLanguage}` });
+  elements.pAfterHeader.textContent = i18nextInstance.t('paragraph.afterHeader', { lng: `${defaultLanguage}` });
+  elements.pExample.textContent = i18nextInstance.t('paragraph.example', { lng: `${defaultLanguage}` });
+  elements.label.textContent = i18nextInstance.t('form.input', { lng: `${defaultLanguage}` });
+  elements.btn.textContent = i18nextInstance.t('form.btn', { lng: `${defaultLanguage}` });
+
   const getYupSchema = (urls) => yup.string().required().url().notOneOf(urls);
 
   const createProxy = (link) => `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(link)}`;
@@ -63,7 +64,6 @@ export default () => {
 
   const getId = generatorId();
 
-  /* State */
   const state = {
     processState: 'initialized',
     rssForm: {
@@ -81,17 +81,13 @@ export default () => {
     },
   };
 
-  /* RSS form */
-  const form = document.querySelector('form');
-  const input = document.querySelector('input');
-
   const watchedState = view(state, i18nextInstance);
 
-  input.addEventListener('change', (e) => {
+  elements.input.addEventListener('change', (e) => {
     watchedState.rssForm.currentUrl = e.target.value;
   });
 
-  form.addEventListener('submit', (e) => {
+  elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     watchedState.rssForm.processState = 'validating';
@@ -159,8 +155,6 @@ export default () => {
           default:
             throw new Error(`Unknown error ${err}`);
         }
-
-        console.error(err);
       });
   });
 };

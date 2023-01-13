@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable consistent-return */
 import axios from 'axios';
 import parseRSS from './parser';
 
@@ -29,9 +27,8 @@ const updatePosts = (watchedState, proxyUrl, feedId, getIdFn) => axios.get(proxy
     });
 
     watchedState.data.posts.push(...newPosts);
-    return newPosts;
   })
-  .catch((err) => console.error(err.message))
+  .catch((err) => console.error('error', err.message))
   .finally(() => setTimeout(() => updatePosts(watchedState, proxyUrl, feedId, getIdFn), 5000));
 
 export default updatePosts;
