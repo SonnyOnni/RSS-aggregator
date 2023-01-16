@@ -4,10 +4,20 @@
 
 ## Vercel link to the project
 
+<p align="center">
+  <a href="https://rss-aggregator-green.vercel.app/">
+    <img alt="aggregator" src="https://user-images.githubusercontent.com/84579087/164723061-7ea9b03e-6a03-4a66-bb04-7ebbc3b7e65d.png">
+  </a>
+</p>
+
 https://frontend-project-11-sigma.vercel.app/
 
 # Description: 
-**Generator of difference** is the CLI programm that generate difference between two files. Supporting formats: JSON, YML, YAML.
+**RSS aggregator** (or **RSS reader**) - the software could use the XML structure to present a neat display to the end users.
+
+Subscribing to RSS feeds can allow a user to keep track of many different websites in a single news aggregator, which constantly monitor sites for new content, removing the need for the user to manually check them. 
+
+Users subscribe to feeds by entering a feed's URI into the reader. The reader checks the user's feeds regularly for new information and can automatically download it.
 
 ## How to install:
 1. Make sure you have installed [Node.js](https://nodejs.org/en/) no lower version 12: ```node -v```.
