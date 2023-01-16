@@ -3,7 +3,7 @@
 [![ESlint](https://github.com/SonnyOnni/frontend-project-11/actions/workflows/eslint.yml/badge.svg)](https://github.com/SonnyOnni/frontend-project-11/actions)
 
 <p align="center">
-  <a href="[https://rss-aggregator-green.vercel.app/](https://frontend-project-11-sigma.vercel.app/)">
+  <a href="https://frontend-project-11-sigma.vercel.app/">
     <img alt="aggregator" src="https://user-images.githubusercontent.com/84579087/164723061-7ea9b03e-6a03-4a66-bb04-7ebbc3b7e65d.png">
   </a>
 </p>
