@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://frontend-project-11-sigma.vercel.app/">
-    <img alt="aggregator" src="src/img/RSS-title.jpg">
+    <img alt="aggregator" src="src/img/example-img.png">
   </a>
 </p>
 
