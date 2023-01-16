@@ -145,7 +145,7 @@ const renderFeeds = (elements, values) => {
   feeds.append(feedsContainer);
 };
 
-const renderPosts = (elements, values, watchedState) => {
+const renderPosts = (elements, values, i18nInstance, watchedState) => {
   const { posts } = elements;
 
   const postsContainer = document.createElement('div');
@@ -165,17 +165,13 @@ const renderPosts = (elements, values, watchedState) => {
     const li = document.createElement('li');
     li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
 
-    const a = document.createElement('a');
-    a.classList.add('fw-bold');
-
-    a.addEventListener('click', (event) => {
-      const link = document.querySelector(' > a');
-      link.classList.replace('fw-bold', 'fw-normal');
-      link.classList.add('link-secondary');
-
+    li.addEventListener('click', (event) => {
       const { id } = event.target.dataset;
       watchedState.uiState.readPostsId.push(id);
     });
+
+    const a = document.createElement('a');
+    a.classList.add('fw-bold');
 
     a.setAttribute('href', post.link);
     a.setAttribute('target', '_blank');
