@@ -2,15 +2,11 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/76ff6abd7d3f7bc201c5/maintainability)](https://codeclimate.com/github/SonnyOnni/frontend-project-11/maintainability)
 [![ESlint](https://github.com/SonnyOnni/frontend-project-11/actions/workflows/eslint.yml/badge.svg)](https://github.com/SonnyOnni/frontend-project-11/actions)
 
-## Vercel link to the project
-
 <p align="center">
-  <a href="https://rss-aggregator-green.vercel.app/">
+  <a href="[https://rss-aggregator-green.vercel.app/](https://frontend-project-11-sigma.vercel.app/)">
     <img alt="aggregator" src="https://user-images.githubusercontent.com/84579087/164723061-7ea9b03e-6a03-4a66-bb04-7ebbc3b7e65d.png">
   </a>
 </p>
-
-https://frontend-project-11-sigma.vercel.app/
 
 # Description: 
 **RSS aggregator** (or **RSS reader**) - the software could use the XML structure to present a neat display to the end users.
