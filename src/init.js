@@ -129,16 +129,6 @@ export default () => {
         watchedState.processState = 'updating';
         return setTimeout(() => updatePosts(watchedState, proxyUrl, feedId, getId), 5000);
       })
-      .then(() => {
-        const posts = document.querySelector('posts > li');
-
-        posts.forEach((post) => {
-          post.addEventListener('click', (event) => {
-            const { id } = event.target.dataset;
-            watchedState.uiState.readPostsId.push(id);
-          });
-        });
-      })
       .catch((err) => {
         switch (err.name) {
           case 'ValidationError': {
