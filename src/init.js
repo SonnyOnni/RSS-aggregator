@@ -120,6 +120,15 @@ export default () => {
         watchedState.data.posts.push(...currentPosts);
         watchedState.urls.push(watchedState.rssForm.currentUrl);
 
+        const postsLink = document.querySelectorAll('.posts li');
+
+        postsLink.forEach((postLink) => {
+          postLink.addEventListener('click', (event) => {
+            const { id } = event.target.dataset;
+            watchedState.uiState.readPostsId.push(id);
+          });
+        });
+
         watchedState.processState = 'loadedSuccess';
         watchedState.uiState.feedback = 'feedback.valid';
         watchedState.rssForm.processState = 'filling';
