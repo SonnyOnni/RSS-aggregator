@@ -96,6 +96,10 @@ export default () => {
         const parsedContent = parseRSS(content);
         const { currentFeed, currentPosts } = parsedContent;
 
+        if (!currentFeed || !currentPosts) {
+          throw new Error('Parser Error');
+        }
+
         currentFeed.id = _.uniqueId();
         currentPosts.forEach((post) => {
           post.feedId = currentFeed.id;
@@ -132,8 +136,10 @@ export default () => {
             break;
 
           case 'Error':
-            watchedState.parserProcess = 'parserErr';
-            watchedState.uiState.feedback = 'feedback.errors.parser';
+            if (err.message === 'Parser Error') {
+              watchedState.parserProcess = 'parserErr';
+              watchedState.uiState.feedback = 'feedback.errors.parser';
+            }
             break;
 
           default:
