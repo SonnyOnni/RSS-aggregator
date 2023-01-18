@@ -46,6 +46,8 @@
     "common-js": "^0.3.8",
     "common.js": "^1.1.1",
     "i18next": "^22.4.5",
+    "lodash": "^4.17.21",
+    "lodash.uniqueid": "^4.0.1",
     "on-change": "^4.0.2",
     "yup": "^0.32.11"
   }

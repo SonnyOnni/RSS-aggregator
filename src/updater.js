@@ -1,10 +1,10 @@
 import axios from 'axios';
+import _ from 'lodash';
 import parseRSS from './parser';
 
-const updatePosts = (watchedState, proxyUrl, feedId, getIdFn) => axios.get(proxyUrl)
-  .then((response) => response.data.contents)
-  .then((content) => {
-    const { currentPosts: requestedPosts } = parseRSS(content);
+const updatePosts = (watchedState, proxyUrl, feedId) => axios.get(proxyUrl)
+  .then((response) => {
+    const { currentPosts: requestedPosts } = parseRSS(response.data.contents);
     if (!requestedPosts) {
       throw new Error('Parser Error');
     }
@@ -23,12 +23,12 @@ const updatePosts = (watchedState, proxyUrl, feedId, getIdFn) => axios.get(proxy
 
     newPosts.forEach((post) => {
       post.feedId = feedId;
-      post.id = getIdFn();
+      post.id = _.uniqueId();
     });
 
     watchedState.data.posts.push(...newPosts);
   })
   .catch((err) => console.error('error', err.message))
-  .finally(() => setTimeout(() => updatePosts(watchedState, proxyUrl, feedId, getIdFn), 5000));
+  .finally(() => setTimeout(() => updatePosts(watchedState, proxyUrl, feedId), 5000));
 
 export default updatePosts;

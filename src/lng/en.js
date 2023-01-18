@@ -9,6 +9,10 @@ export default {
       input: 'Link RSS',
       btn: 'Add',
     },
+    constent: {
+      posts: 'Posts',
+      feeds: 'Feeds',
+    },
     feedback: {
       valid: 'RSS uploaded successfully',
       errors: {

@@ -9,6 +9,10 @@ export default {
       input: 'Ссылка RSS',
       btn: 'Добавить',
     },
+    constent: {
+      posts: 'Посты',
+      feeds: 'Фиды',
+    },
     feedback: {
       valid: 'RSS успешно загружен',
       errors: {
