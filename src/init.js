@@ -132,10 +132,8 @@ export default () => {
             break;
 
           case 'Error':
-            if (err.message === 'Parser Error') {
-              watchedState.parserProcess = 'parserErr';
-              watchedState.uiState.feedback = 'feedback.errors.parser';
-            }
+            watchedState.parserProcess = 'parserErr';
+            watchedState.uiState.feedback = 'feedback.errors.parser';
             break;
 
           default:
