@@ -56,6 +56,7 @@ export default () => {
 
   const state = {
     parserProcess: 'initialized',
+    updateFeedsProcess: 'not updating',
     rssForm: {
       validationProcess: 'filling',
       currentUrl: null,
@@ -93,12 +94,8 @@ export default () => {
       })
       .then((response) => response.data.contents)
       .then((content) => {
-        const parsedContent = parseRSS(content);
+        const parsedContent = parseRSS(content, watchedState);
         const { currentFeed, currentPosts } = parsedContent;
-
-        if (!currentFeed || !currentPosts) {
-          throw new Error('Parser Error');
-        }
 
         currentFeed.id = _.uniqueId();
         currentPosts.forEach((post) => {
@@ -116,7 +113,7 @@ export default () => {
         return currentFeed.id;
       })
       .then((feedId) => {
-        watchedState.parserProcess = 'updating';
+        watchedState.updateFeedsProcess = 'updating';
         return setTimeout(() => updatePosts(watchedState, proxyUrl, feedId), 5000);
       })
       .catch((err) => {
@@ -132,13 +129,6 @@ export default () => {
             if (err.message === 'Network Error') {
               watchedState.parserProcess = 'networkErr';
               watchedState.uiState.feedback = 'feedback.errors.network';
-            }
-            break;
-
-          case 'Error':
-            if (err.message === 'Parser Error') {
-              watchedState.parserProcess = 'parserErr';
-              watchedState.uiState.feedback = 'feedback.errors.parser';
             }
             break;
 

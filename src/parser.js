@@ -1,4 +1,4 @@
-const parseRSS = (linkContent) => {
+const parseRSS = (linkContent, watchedState) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(linkContent, 'text/xml');
 
@@ -38,6 +38,12 @@ const parseRSS = (linkContent) => {
       });
 
     currentPosts = posts;
+  }
+
+  if (!currentFeed || !currentPosts) {
+    watchedState.parserProcess = 'parserErr';
+    watchedState.uiState.feedback = 'feedback.errors.parser';
+    throw new Error('Parser Error');
   }
 
   return { currentFeed, currentPosts };

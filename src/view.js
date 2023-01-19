@@ -17,9 +17,6 @@ const checkParserProcess = (elements, parserProcess) => {
     case 'initialized':
       break;
 
-    case 'updating':
-      break;
-
     case 'parserErr':
       btn.disabled = false;
       break;
@@ -129,6 +126,7 @@ const view = (state, elements, i18nInstance) => {
 
       case 'rssForm.currentUrl':
       case 'urls':
+      case 'updateFeedsProcess':
         break;
 
       default:
