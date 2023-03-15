@@ -1,6 +1,6 @@
-[![Actions Status](https://github.com/SonnyOnni/frontend-project-11/workflows/hexlet-check/badge.svg)](https://github.com/SonnyOnni/frontend-project-11/actions)
-[![Maintainability](https://api.codeclimate.com/v1/badges/76ff6abd7d3f7bc201c5/maintainability)](https://codeclimate.com/github/SonnyOnni/frontend-project-11/maintainability)
-[![ESlint](https://github.com/SonnyOnni/frontend-project-11/actions/workflows/eslint.yml/badge.svg)](https://github.com/SonnyOnni/frontend-project-11/actions)
+[![Actions Status](https://github.com/SonnyOnni/RSS-aggregator/workflows/hexlet-check/badge.svg)](https://github.com/SonnyOnni/RSS-aggregator/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/76ff6abd7d3f7bc201c5/maintainability)](https://codeclimate.com/github/SonnyOnni/RSS-aggregator/maintainability)
+[![ESlint](https://github.com/SonnyOnni/RSS-aggregator/actions/workflows/eslint.yml/badge.svg)](https://github.com/SonnyOnni/RSS-aggregator/actions)
 
 <p align="center">
   <a href="https://frontend-project-11-sigma.vercel.app/">
@@ -17,13 +17,13 @@ Users subscribe to feeds by entering a feed's URI into the reader. The reader ch
 
 ## How to install:
 1. Make sure you have installed [Node.js](https://nodejs.org/en/) no lower version 12: ```node -v```.
-2. Clone repository: ```git@github.com:SonnyOnni/frontend-project-11.git```.
-3. Change directory to frontend-project-11
+2. Clone repository: ```git@github.com:SonnyOnni/RSS-aggregator.git```.
+3. Change directory to RSS-aggregator
 4. Run the command: ```make install```.
 
 ```shell
-$ git clone git@github.com:SonnyOnni/frontend-project-11.git
-$ cd frontend-project-11
+$ git clone git@github.com:SonnyOnni/RSS-aggregator.git
+$ cd RSS-aggregator
 $ make install
 ```
 
